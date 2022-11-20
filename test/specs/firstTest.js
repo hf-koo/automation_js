@@ -10,5 +10,13 @@ describe("Ecommerce Application", async () => {
 
     //CSS Selector , Xpath
     $("#username").setValue("rahulshettyacademy");
+
+    await browser.waitUntil(
+      async () => (await $("#signInBtn").getAttribute("value")) === "Sign In",
+      {
+        timeout: 5000,
+        timeoutMsg: "Error message is not showing up"
+      }
+    );
   });
 });

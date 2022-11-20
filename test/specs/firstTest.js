@@ -1,7 +1,10 @@
-describe("Ecommerce Application", () => {
-  it("Login Fail page", () => {
+describe("Ecommerce Application", async () => {
+  it("Login Fail page", async () => {
     //webdriverIO Async
-    browser.url("https://rahulshettyacademy.com/loginpagePractise/");
-    console.log(browser.getTitle());
+    await browser.url("https://rahulshettyacademy.com/loginpagePractise/");
+
+    // resolved, pending, rejected
+
+    console.log(await browser.getTitle());
   });
 });

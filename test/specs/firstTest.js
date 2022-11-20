@@ -6,5 +6,9 @@ describe("Ecommerce Application", async () => {
     // resolved, pending, rejected
 
     console.log(await browser.getTitle());
+    await expect(browser).toHaveTitleContaining("Rahul Shetty Academy");
+
+    //CSS Selector , Xpath
+    $("#username").setValue("rahulshettyacademy");
   });
 });

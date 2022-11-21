@@ -1,5 +1,5 @@
 describe("Ecommerce Application", async () => {
-  it("Login Fail page", async () => {
+  xit("Login Fail page", async () => {
     //webdriverIO Async
     await browser.url("https://rahulshettyacademy.com/loginpagePractise/");
 
@@ -18,5 +18,17 @@ describe("Ecommerce Application", async () => {
         timeoutMsg: "Error message is not showing up"
       }
     );
+  });
+
+  it("Login Success Page", async () => {
+    await browser.url("https://rahulshettyacademy.com/loginpagePractise/");
+    await $("input[name='username']").setValue("rahulshettyacademy");
+    const password = $("//input[@type='password']");
+    await password.setValue("learning");
+    await $("#signInBtn").click();
+    //wait until checkout button is displayed
+    await $(".btn-primary").waitForExist();
+    await expect(browser).toHaveUrlContaining("shop");
+    await expect(browser).toHaveTitle("ProtoCommerce");
   });
 });

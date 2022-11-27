@@ -32,7 +32,7 @@ describe("UI Controls Test Suite", async () => {
     expectchai(await dropdown.getValue()).to.equal("stud");
   });
 
-  it("Dynamic Dropdown Controls", async () => {
+  xit("Dynamic Dropdown Controls", async () => {
     await browser.url("https://rahulshettyacademy.com/AutomationPractice/");
     await $("#autocomplete").setValue("ind");
     await browser.pause(3000);
@@ -43,5 +43,14 @@ describe("UI Controls Test Suite", async () => {
         await browser.pause(3000);
       }
     }
+  });
+
+  it("Checkboxes Identification", async () => {
+    await browser.url("https://rahulshettyacademy.com/AutomationPractice/");
+    const element = await $$("input[type='checkbox']");
+    await element[1].click();
+    console.log(await element[1].isSelected());
+    console.log(await element[2].isSelected());
+    await browser.saveScreenshot("screenshot.png");
   });
 });

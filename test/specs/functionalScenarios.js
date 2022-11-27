@@ -8,5 +8,16 @@ describe("Functional Testing on Application", async () => {
     await $("#mousehover").moveTo();
     await browser.pause(3000);
     await $("=Top").click();
+    await browser.url(
+      "https://only-testing-blog.blogspot.com/2014/09/selectable.html"
+    );
+    await $("button").doubleClick();
+    console.log(await browser.isAlertOpen());
+    expectchai(await browser.isAlertOpen()).to.be.true;
+    expectchai(await browser.getAlertText()).to.equal(
+      "You double clicked me.. Thank You.."
+    );
+    await browser.acceptAlert();
+    await browser.pause(3000);
   });
 });

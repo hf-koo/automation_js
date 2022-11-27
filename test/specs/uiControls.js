@@ -8,6 +8,11 @@ describe("UI Controls Test Suite", async () => {
     const radionButtons = await $$(".customradio");
     const userDropdown = radionButtons[1];
     await userDropdown.$("span").click();
-    await browser.pause(4000);
+
+    const modal = await $(".modal-body");
+    await modal.waitForDisplayed();
+    await $("#cancelBtn").click();
+    await $$(".customradio")[0].$("span").isSelected();
+    await modal.waitForDisplayed();
   });
 });

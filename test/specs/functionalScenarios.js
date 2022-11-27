@@ -21,7 +21,7 @@ describe("Functional Testing on Application", async () => {
     await browser.pause(3000);
   });
 
-  it("Web Tables validation", async () => {
+  xit("Web Tables sort validation", async () => {
     await browser.url(
       "https://rahulshettyacademy.com/seleniumPractise/#/offers"
     );
@@ -39,5 +39,16 @@ describe("Functional Testing on Application", async () => {
     sortedVeggies = veggies.sort();
     console.log(sortedVeggies);
     expectchai(OriginalveggiesNames).to.eql(sortedVeggies);
+  });
+
+  it("Web Tables Filter validation", async () => {
+    await browser.url(
+      "https://rahulshettyacademy.com/seleniumPractise/#/offers"
+    );
+    await $("input[type='search']").setValue("tomato");
+    const veggieLocators = await $$("tr td:nth-child(1)");
+    await expect(veggieLocators).toBeElementsArrayOfSize({ eq: 1 });
+    console.log(await veggieLocators[0].getText());
+    await expect(await veggieLocators[0]).toHaveTextContaining("Tomato");
   });
 });

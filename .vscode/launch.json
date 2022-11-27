@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "name": "WebDriverIO Test",
+      "type": "node",
+      "request": "launch",
+      "args": ["dio.conf.js"],
+      "cwd": "${workspaceFolder}",
+      "autoAttachChildProcesses": true,
+      "program": "${workspaceRoot}/node_modules/@wdio/cli/bin/wdio.js",
+      "console": "integratedTerminal"
+    }
+  ]
+}

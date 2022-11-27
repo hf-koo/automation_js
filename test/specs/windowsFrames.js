@@ -1,5 +1,5 @@
 describe("Windows and Frames Miscellanous", async () => {
-  it("Parent and Child windows switch", async () => {
+  xit("Parent and Child windows switch", async () => {
     await browser.url("https://rahulshettyacademy.com/loginpagePractise/");
     await $(".blinkingText").click();
     const handles = await browser.getWindowHandles(); // 2 windows-
@@ -15,5 +15,14 @@ describe("Windows and Frames Miscellanous", async () => {
     );
     await $("#username").setValue("helloiswitchback");
     await browser.pause(4000);
+  });
+
+  it("Frames switch", async () => {
+    await browser.url("https://rahulshettyacademy.com/AutomationPractice/");
+    await $("#mousehover").scrollIntoView();
+    console.log(await $$("a").length);
+    await browser.switchToFrame(await $("[id='courses-iframe']"));
+    console.log(await $("=Courses").getTagName());
+    console.log(await $$("a").length);
   });
 });

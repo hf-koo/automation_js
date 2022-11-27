@@ -1,7 +1,7 @@
 const expectchai = require("chai").expect;
 
 describe("Functional Testing on Application", async () => {
-  it("Scrolling and Mouse hover", async () => {
+  xit("Scrolling and Mouse hover", async () => {
     await browser.url("https://rahulshettyacademy.com/AutomationPractice/");
     await $("#mousehover").scrollIntoView();
     await browser.pause(3000);
@@ -19,5 +19,25 @@ describe("Functional Testing on Application", async () => {
     );
     await browser.acceptAlert();
     await browser.pause(3000);
+  });
+
+  it("Web Tables validation", async () => {
+    await browser.url(
+      "https://rahulshettyacademy.com/seleniumPractise/#/offers"
+    );
+    await $("tr th:nth-child(1)").click();
+    //retrieve list of veggie names into array
+    //sort the array A -> Array B
+    //compare Array A and Array B//fail
+    const veggiesLocators = await $$("tr td:nth-child(1)");
+    const OriginalveggiesNames = await veggiesLocators.map(
+      async (veggie) => await veggie.getText()
+    );
+    console.log(OriginalveggiesNames);
+    veggies = OriginalveggiesNames.slice();
+    //Arrays are pass by reference
+    sortedVeggies = veggies.sort();
+    console.log(sortedVeggies);
+    expectchai(OriginalveggiesNames).to.eql(sortedVeggies);
   });
 });

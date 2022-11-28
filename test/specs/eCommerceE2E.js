@@ -31,5 +31,11 @@ describe("Ecommerce Application", async () => {
     const TotalValue = await $("h3 strong").getText();
     const totalIntValve = await parseInt(TotalValue.split(".")[1].trim());
     await expectchai(sumOfProducts).to.equal(totalIntValve);
+    await $(".btn-success").click();
+    await $("#country").setValue("ind");
+    await $(".ids-ellipsis").waitForExist({ reverse: true });
+    await $("=India").click();
+    await $("input[type='submit']").click();
+    await expect($(".alert-success")).toHaveTextContaining("Success");
   });
 });

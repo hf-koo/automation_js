@@ -4,10 +4,11 @@ const reviewPage = require("../pageObjects/reviewPage");
 const expectchai = require("chai").expect;
 const fs = require("fs");
 let credentials = JSON.parse(fs.readFileSync("test/testData/LoginTest.json"));
+let e2eCredentials = JSON.parse(fs.readFileSync("test/testData/e2eTest.json"));
 
 describe("Ecommerce Application", async () => {
   credentials.forEach(({ username, password }) => {
-    it("Login Fail page", async () => {
+    xit("Login Fail page", async () => {
       //webdriverIO Async
       await browser.url("https://rahulshettyacademy.com/loginpagePractise/");
 
@@ -35,27 +36,29 @@ describe("Ecommerce Application", async () => {
     });
   });
 
-  xit("End to End test", async () => {
-    const products = ["iphone X", "Blackberry"];
-    await browser.url("https://rahulshettyacademy.com/loginpagePractise/");
-    await loginPage.Login("rahulshettyacademy", "learning");
+  e2eCredentials.forEach(({ products }) => {
+    it("End to End test", async () => {
+      //const products = ["iphone X", "Blackberry"];
+      await browser.url("https://rahulshettyacademy.com/loginpagePractise/");
+      await loginPage.Login("rahulshettyacademy", "learning");
 
-    //wait until checkout button is displayed
-    await shopPage.checkout.waitForExist(); //link text
-    await shopPage.addProductToCart(products);
-    await shopPage.checkout.click();
-    sumOfProducts = await reviewPage.sumOfProducts();
-    totalIntValue = await reviewPage.totalFormattedPrice();
+      //wait until checkout button is displayed
+      await shopPage.checkout.waitForExist(); //link text
+      await shopPage.addProductToCart(products);
+      await shopPage.checkout.click();
+      sumOfProducts = await reviewPage.sumOfProducts();
+      totalIntValue = await reviewPage.totalFormattedPrice();
 
-    //Streams async mode
+      //Streams async mode
 
-    await expectchai(sumOfProducts).to.equal(totalIntValue);
-    await $(".btn-success").click();
+      await expectchai(sumOfProducts).to.equal(totalIntValue);
+      await $(".btn-success").click();
 
-    await $("#country").setValue("ind");
-    await $(".ids-ellipsis").waitForExist({ reverse: true });
-    await $("=India").click();
-    await $("input[type='submit']").click();
-    await expect($(".alert-success")).toHaveTextContaining("Success");
+      await $("#country").setValue("ind");
+      await $(".ids-ellipsis").waitForExist({ reverse: true });
+      await $("=India").click();
+      await $("input[type='submit']").click();
+      await expect($(".alert-success")).toHaveTextContaining("Success");
+    });
   });
 });

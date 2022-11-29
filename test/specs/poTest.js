@@ -1,7 +1,10 @@
 const loginPage = require("../pageobjects/loginPage");
+const shopPage = require("../pageobjects/shop");
+const reviewPage = require("../pageobjects/reviewPage");
+const expectchai = require("chai").expect;
 
 describe("Ecommerce Application", async () => {
-  it("Login Fail page", async () => {
+  xit("Login Fail page", async () => {
     //webdriverIO Async
     await browser.url("https://rahulshettyacademy.com/loginpagePractise/");
 
@@ -25,5 +28,29 @@ describe("Ecommerce Application", async () => {
     await expect(await loginPage.textInfo).toHaveTextContaining(
       "username is rahulshettyacademy and Password"
     );
+  });
+
+  it("End to End test", async () => {
+    const products = ["iphone X", "Blackberry"];
+    await browser.url("https://rahulshettyacademy.com/loginpagePractise/");
+    await loginPage.Login("rahulshettyacademy", "learning");
+
+    //wait until checkout button is displayed
+    await shopPage.checkout.waitForExist(); //link text
+    await shopPage.addProductToCart(products);
+    await shopPage.checkout.click();
+    sumOfProducts = await reviewPage.sumOfProducts();
+    totalIntValue = await reviewPage.totalFormattedPrice();
+
+    //Streams async mode
+
+    await expectchai(sumOfProducts).to.equal(totalIntValue);
+    await $(".btn-success").click();
+
+    await $("#country").setValue("ind");
+    await $(".ids-ellipsis").waitForExist({ reverse: true });
+    await $("=India").click();
+    await $("input[type='submit']").click();
+    await expect($(".alert-success")).toHaveTextContaining("Success");
   });
 });

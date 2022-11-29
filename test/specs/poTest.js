@@ -1,36 +1,41 @@
-const loginPage = require("../pageobjects/loginPage");
-const shopPage = require("../pageobjects/shop");
-const reviewPage = require("../pageobjects/reviewPage");
+const loginPage = require("../pageObjects/loginPage");
+const shopPage = require("../pageObjects/shop");
+const reviewPage = require("../pageObjects/reviewPage");
 const expectchai = require("chai").expect;
+const fs = require("fs");
+let credentials = JSON.parse(fs.readFileSync("test/testData/LoginTest.json"));
 
 describe("Ecommerce Application", async () => {
-  xit("Login Fail page", async () => {
-    //webdriverIO Async
-    await browser.url("https://rahulshettyacademy.com/loginpagePractise/");
+  credentials.forEach(({ username, password }) => {
+    it("Login Fail page", async () => {
+      //webdriverIO Async
+      await browser.url("https://rahulshettyacademy.com/loginpagePractise/");
 
-    // resolved, pending, rejected
+      // resolved, pending, rejected
 
-    console.log(await browser.getTitle());
-    await expect(browser).toHaveTitleContaining("Rahul Shetty Academy");
+      console.log(await browser.getTitle());
+      await expect(browser).toHaveTitleContaining("Rahul Shetty Academy");
 
-    //CSS Selector , Xpath
-    await loginPage.Login("rahulshettyacademy", "learning123");
-    await console.log(await loginPage.alert.getText());
+      //CSS Selector , Xpath
+      await loginPage.Login(username, password);
+      await console.log(await loginPage.alert.getText());
 
-    await browser.waitUntil(
-      async () => (await loginPage.signIn.getAttribute("value")) === "Sign In",
-      {
-        timeout: 5000,
-        timeoutMsg: "Error message is not showing up"
-      }
-    );
-    await console.log(await loginPage.alert.getText());
-    await expect(await loginPage.textInfo).toHaveTextContaining(
-      "username is rahulshettyacademy and Password"
-    );
+      await browser.waitUntil(
+        async () =>
+          (await loginPage.signIn.getAttribute("value")) === "Sign In",
+        {
+          timeout: 5000,
+          timeoutMsg: "Error message is not showing up"
+        }
+      );
+      await console.log(await loginPage.alert.getText());
+      await expect(await loginPage.textInfo).toHaveTextContaining(
+        "username is rahulshettyacademy and Password"
+      );
+    });
   });
 
-  it("End to End test", async () => {
+  xit("End to End test", async () => {
     const products = ["iphone X", "Blackberry"];
     await browser.url("https://rahulshettyacademy.com/loginpagePractise/");
     await loginPage.Login("rahulshettyacademy", "learning");
